@@ -149,7 +149,7 @@ jobs:
         run: |
           echo "Deploy HML"
 
-  Smoketest_hml:
+  Smoketest_HML:
     runs-on: ubuntu-latest
     needs: Deploy-HML
 
@@ -163,7 +163,7 @@ jobs:
 
   Teste-HML:
     runs-on: ubuntu-latest
-    needs: Smoketest_hml
+    needs: Smoketest_HML
 
     if: github.ref == 'refs/heads/homolog'
     steps:
