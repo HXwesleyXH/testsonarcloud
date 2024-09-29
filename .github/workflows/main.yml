@@ -99,7 +99,7 @@ jobs:
     - name: Package
       run: mvn package
 
-  deploy-DEV:
+  Deploy-DEV:
     runs-on: ubuntu-latest
     needs: build
     environment:
@@ -108,14 +108,14 @@ jobs:
     if: github.ref == 'refs/heads/develop'
     steps:
 
-      - name: Deploy 
+      - name: Deploy
         shell: bash
         run: |
           echo "Deploy DEV"
 
-  Smoketest:
+  Smoketest-DEV:
     runs-on: ubuntu-latest
-    needs: deploy-DEV
+    needs: Deploy-DEV
 
     if: github.ref == 'refs/heads/develop'
     steps:
@@ -125,9 +125,9 @@ jobs:
         run: |
           sh 'src/main/scripts/smoketest.sh'
 
-  testeIntegrados:
+  Teste-DEV:
     runs-on: ubuntu-latest
-    needs: Smoketest
+    needs: Smoketest-DEV
 
     if: github.ref == 'refs/heads/develop'
     steps:
@@ -137,7 +137,7 @@ jobs:
         run: |
           sh 'src/main/scripts/testeIntegrado.sh'
 
-  deploy-HML:
+  Deploy-HML:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/homolog'
     environment:
@@ -149,9 +149,9 @@ jobs:
         run: |
           echo "Deploy HML"
 
-  Smoketest_hml:
+  Smoketest_HML:
     runs-on: ubuntu-latest
-    needs: deploy-HML
+    needs: Deploy-HML
 
     if: github.ref == 'refs/heads/homolog'
     steps:
@@ -161,9 +161,9 @@ jobs:
         run: |
           sh 'src/main/scripts/smoketest.sh'
 
-  testeFuncionais:
+  Teste-HML:
     runs-on: ubuntu-latest
-    needs: Smoketest_hml
+    needs: Smoketest_HML
 
     if: github.ref == 'refs/heads/homolog'
     steps:
@@ -173,7 +173,7 @@ jobs:
         run: |
           sh 'src/main/scripts/testesFuncionais.sh'
 
-  deploy-Prod:
+  Deploy-PRD:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     environment:
@@ -184,4 +184,4 @@ jobs:
       - name: Deploy 
         shell: bash
         run: |
-          echo "Deploy PROD" 
+          echo "Deploy PRD" 
